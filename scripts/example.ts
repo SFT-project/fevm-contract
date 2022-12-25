@@ -5,7 +5,7 @@ dotenv.config();
 
 const depositContractAddress = "0xC088e0a7ceBde86aa7DFE7765B609957f2A48Bd6"
 const depositContractAbi = [
-  `function takeTokens() external`,
+  `function takeTokens(address recipient) external`,
   `function mintSFT(address[] calldata userList, uint[] calldata amountList) external`
 ]
 const PRIVATE_KEY = process.env.PRIVATE_KEY as string
@@ -17,7 +17,8 @@ async function main() {
   const depositContract = new ethers.Contract(depositContractAddress, depositContractAbi).connect(wallet)
   // 调用Deposit合约中的方法
   // 取走合约中所有质押进来的FIL
-  let tx = await depositContract.connect(wallet).takeTokens() //也可以在调用具体方法时再连接钱包：
+  const recipient = "0x49554923b9361e158Fb267B436f843a4f537D53a"
+  let tx = await depositContract.connect(wallet).takeTokens(recipient) //也可以在调用具体方法时再连接钱包：
   // 等待交易确认，receipt中可以拿到相关事件信息
   let recepit = await tx.wait()
   console.log("take tokens finished")

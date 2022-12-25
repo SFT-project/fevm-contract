@@ -17,7 +17,7 @@ contract Deposit is Ownable2StepUpgradeable {
 
     event DepositFIL(address indexed user, uint amount, uint timestamp);
     event MintSFT(address indexed minter, address[] userList, uint[] amountList, uint timestamp);
-    event TakeTokens(address indexed taker, uint amount, uint timestamp);
+    event TakeTokens(address indexed taker, address recipient, uint amount, uint timestamp);
     event SetMinter(address oldMinter, address newMinter);
     event SetTaker(address oldTaker, address newTaker);
     
@@ -61,11 +61,11 @@ contract Deposit is Ownable2StepUpgradeable {
     }
 
     // 取走质押的fil，拿去做节点
-    function takeTokens() external {
+    function takeTokens(address recipient) external {
         require(address(msg.sender) == taker, "only taker can call");
         require(filToken.balanceOf(address(this)) >= remainTokens, "incorrect balance");
-        filToken.safeTransfer(address(msg.sender), remainTokens);
-        emit TakeTokens(address(msg.sender), remainTokens, block.timestamp);
+        filToken.safeTransfer(recipient, remainTokens);
+        emit TakeTokens(address(msg.sender), recipient, remainTokens, block.timestamp);
         delete remainTokens;
     }
 
