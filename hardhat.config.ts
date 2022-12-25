@@ -27,15 +27,11 @@ const config: HardhatUserConfig = {
       bscmain: "0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153",
       bsctest: "0xCb12e617C17598EDa4ebC2e8a75cb0698feEE829",
     },
-    authorityAddress: {
+    minterAddress: {
       bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     },
-    approverAddress: {
-      bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
-      bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
-    },
-    oracleAddress: {
+    takerAddress: {
       bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     }

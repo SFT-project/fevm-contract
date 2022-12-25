@@ -6,4 +6,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 export default func;
 func.tags = ["DeployAll"];
-func.dependencies = ["SFTToken", "Deposit", "Reward"]
+func.dependencies = ["SFTToken", "Deposit"]

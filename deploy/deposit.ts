@@ -3,7 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
  
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, ethers, getNamedAccounts } = hre;
-    const { deployer, filTokenAddress, approverAddress, authorityAddress, oracleAddress } = await getNamedAccounts();
+    const { deployer, filTokenAddress, minterAddress, takerAddress } = await getNamedAccounts();
     const signer = await ethers.getSigner(deployer);
 
     // deploy Deposit contract
@@ -27,10 +27,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     console.log(`Proxy contract address: ${ProxyResult.address}`);
     const Deposit = await ethers.getContractAt("Deposit", ProxyResult.address, signer);
     const SFTTokenDeployment = await deployments.get("SFTToken");
-    const demandDepositLimit = ethers.BigNumber.from('30000000000000000000000000');
-    const mutex = true;
-    const applyCount = 1;
-    const initializeTx = await Deposit.initialize(filTokenAddress, SFTTokenDeployment.address, authorityAddress, approverAddress, oracleAddress, demandDepositLimit, mutex, applyCount);
+    const initializeTx = await Deposit.initialize(filTokenAddress, SFTTokenDeployment.address, minterAddress, takerAddress);
     await initializeTx.wait();
     console.log('Deposit contract initilize successfully.');
     // add SFT token minter

@@ -9,7 +9,7 @@ async function main() {
   const networkName = hre.network.name;
 
   //just change this to verify a single contract
-  const contractName = "Reward";
+  const contractName = "Deposit";
   const { address, args } = (await import(`../deployments/${networkName}/${contractName}.json`)) as TDeployment;
   //{ address, args }
   await hre.run("verify:verify", {
