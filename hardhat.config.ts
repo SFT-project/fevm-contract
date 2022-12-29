@@ -34,6 +34,10 @@ const config: HardhatUserConfig = {
     takerAddress: {
       bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+    },
+    distributorAddress: {
+      bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     }
   },
  defaultNetwork: "hardhat",

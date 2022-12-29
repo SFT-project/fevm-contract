@@ -3,7 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
  
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, ethers, getNamedAccounts } = hre;
-    const { deployer, filTokenAddress } = await getNamedAccounts();
+    const { deployer, filTokenAddress, distributorAddress } = await getNamedAccounts();
     const signer = await ethers.getSigner(deployer);
 
     // deploy Reward contract
@@ -23,8 +23,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     console.log(`Proxy contract address: ${ProxyResult.address}`);
     const Reward = await ethers.getContractAt("Reward", ProxyResult.address, signer);
     const SFTTokenDeployment = await deployments.get("SFTToken");
-    const rewardUnit = ethers.BigNumber.from('34722222222');
-    const initializeTx = await Reward.initialize(filTokenAddress, SFTTokenDeployment.address, rewardUnit);
+    const initializeTx = await Reward.initialize(filTokenAddress, SFTTokenDeployment.address, distributorAddress);
     await initializeTx.wait();
     console.log('Reward contract initilize successfully.');
 }
