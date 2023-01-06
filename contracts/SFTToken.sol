@@ -4,10 +4,14 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+
 
 contract SFTToken is Ownable2Step, ERC20, ERC20Burnable {
+    using EnumerableSet for EnumerableSet.AddressSet;
 
     mapping(address => bool) private _minters;
+    EnumerableSet.AddressSet private _backList;
 
     event MinterAdded(address indexed account);
     event MinterRemoved(address indexed account);
@@ -18,6 +22,18 @@ contract SFTToken is Ownable2Step, ERC20, ERC20Burnable {
     }
 
     constructor() ERC20("SFT Token", "SFT") {}
+
+    function addBackList(address account) external onlyOwner {
+        _backList.add(account);
+    }
+
+    function removeBackList(address account) external onlyOwner {
+        _backList.remove(account);
+    }
+
+    function getBackList() external view returns(address[] memory) {
+        return _backList.values();
+    }
 
      /**
      * @dev Add a new minter.
@@ -78,4 +94,22 @@ contract SFTToken is Ownable2Step, ERC20, ERC20Burnable {
         emit MinterRemoved(_account);
     }
 
+     function transfer(address to, uint256 amount) public override returns (bool) {
+        require(!_backList.contains(address(msg.sender)), "account in backlist");
+        address owner = _msgSender();
+        _transfer(owner, to, amount);
+        return true;
+    }
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) public override returns (bool) {
+        require(!_backList.contains(from), "account in backlist");
+        address spender = _msgSender();
+        _spendAllowance(from, spender, amount);
+        _transfer(from, to, amount);
+        return true;
+    }
 }

@@ -14,6 +14,8 @@ contract Deposit is Ownable2StepUpgradeable {
     address public minter; // mint SFT address
     address public taker; // take FIL address
     uint public remainTokens;
+    mapping(address => uint) public totalFILDeposited;
+    mapping(address => uint) public totalSFTMinted;
 
     event DepositFIL(address indexed user, uint amount, uint timestamp);
     event MintSFT(address indexed minter, address[] userList, uint[] amountList, uint timestamp);
@@ -57,6 +59,7 @@ contract Deposit is Ownable2StepUpgradeable {
         require(filToken.balanceOf(address(msg.sender)) >= amount, "fil balance not enough");
         filToken.safeTransferFrom(address(msg.sender), address(this), amount);
         remainTokens += amount;
+        totalFILDeposited[address(msg.sender)] += amount;
         emit DepositFIL(address(msg.sender), amount, block.timestamp);
     }
 
@@ -74,6 +77,8 @@ contract Deposit is Ownable2StepUpgradeable {
         require(address(msg.sender) == minter, "only minter can call");
         require(userList.length > 0 && userList.length == amountList.length, "incorrct params");
         for(uint i = 0; i < userList.length; i++) {
+            totalSFTMinted[userList[i]] += amountList[i];
+            require(totalSFTMinted[userList[i]] <= totalFILDeposited[userList[i]], "minted SFT amount exceed Deposited FIL amount");
             sftToken.mint(userList[i], amountList[i]);
         }
         emit MintSFT(address(msg.sender), userList, amountList, block.timestamp);
