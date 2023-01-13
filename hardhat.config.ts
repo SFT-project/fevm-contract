@@ -16,11 +16,11 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
       default: 0,
-      bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bscmain: "0x3BBFa3feDbb53323CD2beb754f20bDbb87D04bc1",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     },
     ownerAddress: {
-      bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bscmain: "0x3BBFa3feDbb53323CD2beb754f20bDbb87D04bc1",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     },
     filTokenAddress: {
@@ -28,7 +28,7 @@ const config: HardhatUserConfig = {
       bsctest: "0xCb12e617C17598EDa4ebC2e8a75cb0698feEE829",
     },
     minterAddress: {
-      bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bscmain: "0x37a1d1b504Ed06A9D5d494b82b8457cAf61eDAfC",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     },
     takerAddress: {
@@ -36,7 +36,7 @@ const config: HardhatUserConfig = {
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     },
     distributorAddress: {
-      bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bscmain: "0xaEe4adf799632580882A8c23A3cf2B9154090c27",
       bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
     }
   },
