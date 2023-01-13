@@ -29,11 +29,11 @@ const config: HardhatUserConfig = {
     },
     minterAddress: {
       bscmain: "0x37a1d1b504Ed06A9D5d494b82b8457cAf61eDAfC",
-      bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bsctest: "0x8ace7f7e66f7546fa435380a640c08e9e77ad751",
     },
     takerAddress: {
       bscmain: "0x49554923b9361e158Fb267B436f843a4f537D53a",
-      bsctest: "0x49554923b9361e158Fb267B436f843a4f537D53a",
+      bsctest: "0xd7bc572df81af1eef0b3b3ce6aba067b1b1677c9",
     },
     distributorAddress: {
       bscmain: "0xaEe4adf799632580882A8c23A3cf2B9154090c27",
@@ -48,7 +48,7 @@ const config: HardhatUserConfig = {
       accounts,
     },
     bsctest: {
-      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+      url: 'https://data-seed-prebsc-2-s3.binance.org:8545',
       chainId: 97,
       accounts,
     },
