@@ -6,15 +6,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployer } = await getNamedAccounts();
     const signer = await ethers.getSigner(deployer);
 
-    const SFTTokenResult = await deployments.deploy("SFTToken",
+    const MockTokenResult = await deployments.deploy("MockToken",
         {
             from: deployer,
             args: [],
             maxPriorityFeePerGas: ethers.BigNumber.from("5000000000"),
             log: true
         });
-    console.log(`SFTToken contract address: ${SFTTokenResult.address}`)
+    console.log(`MockToken contract address: ${MockTokenResult.address}`)
 }
 
+
 export default func;
-func.tags = ["SFTToken"];
+func.tags = ["MockToken"];

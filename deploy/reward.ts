@@ -9,7 +9,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     // deploy Reward contract
     const RewardResult = await deployments.deploy("Reward", {
         from: deployer,
-        args: []
+        args: [],
+        maxPriorityFeePerGas: ethers.BigNumber.from("5000000000"),
+        log: true
     });
     console.log(`Reward contract address: ${RewardResult.address}`);
     // get ProxyAdmin contract
@@ -18,12 +20,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const ProxyResult = await deployments.deploy("RewardProxy", {
         from: deployer,
         args: [RewardResult.address, ProxyDeployment.address, "0x"],
+        maxPriorityFeePerGas: ethers.BigNumber.from("5000000000"),
+        log: true,
         contract: "TransparentUpgradeableProxy",
     });
     console.log(`Proxy contract address: ${ProxyResult.address}`);
     const Reward = await ethers.getContractAt("Reward", ProxyResult.address, signer);
     const SFTTokenDeployment = await deployments.get("SFTToken");
-    const initializeTx = await Reward.initialize(filTokenAddress, SFTTokenDeployment.address, distributorAddress);
+    const initializeTx = await Reward.initialize(filTokenAddress, SFTTokenDeployment.address, distributorAddress, { maxPriorityFeePerGas: ethers.BigNumber.from("5000000000") });
     await initializeTx.wait();
     console.log('Reward contract initilize successfully.');
 }

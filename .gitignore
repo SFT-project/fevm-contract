@@ -9,6 +9,7 @@ typechain-types
 cache
 artifacts
 dist
+flatten
 
 .vscode
 .idea
